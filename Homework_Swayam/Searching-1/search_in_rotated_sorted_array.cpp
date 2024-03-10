@@ -7,14 +7,14 @@ public:
         {
             if (s == e)
             {
-                return e;
+                return s;
             }
             int mid = s + (e - s) / 2;
-            if (mid - 1 >= s && nums[mid - 1] > nums[mid])
+            if (mid - 1 >= s && nums[mid] < nums[mid - 1])
             {
                 return mid - 1;
             }
-            if (mid <= e && nums[mid] > nums[mid + 1])
+            else if (mid + 1 <= e && nums[mid] > nums[mid + 1])
             {
                 return mid;
             }
@@ -29,7 +29,7 @@ public:
         }
         return s;
     }
-    int binarysearch(vector<int> &nums, int target, int s, int e)
+    int binaryS(vector<int> &nums, int target, int s, int e)
     {
         while (s <= e)
         {
@@ -38,7 +38,7 @@ public:
             {
                 return mid;
             }
-            if (nums[mid] > target)
+            else if (nums[mid] > target)
             {
                 e = mid - 1;
             }
@@ -51,16 +51,15 @@ public:
     }
     int search(vector<int> &nums, int target)
     {
+        int pivotIndex = pivot(nums, 0, nums.size() - 1);
         int ans = 0;
-        int pivotindex = pivot(nums, 0, nums.size() - 1);
-        // WE HAVE TO COMPARE TARGET FROM THE FIRST ELEMENT
-        if (target >= nums[0] && nums[pivotindex] >= target)
+        if (target >= nums[0] && nums[pivotIndex] >= target)
         {
-            ans = binarysearch(nums, target, 0, pivotindex);
+            ans = binaryS(nums, target, 0, pivotIndex);
         }
         else
         {
-            ans = binarysearch(nums, target, pivotindex + 1, nums.size() - 1);
+            ans = binaryS(nums, target, pivotIndex + 1, nums.size() - 1);
         }
         return ans;
     }
